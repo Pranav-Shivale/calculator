@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Google Sans", sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 4px;
+  background-color: #f6f7eb;
+  width: 400px;
+  height: auto;
+}
+
+.display {
+  border-bottom: 2px solid #e94f37;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 75px;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px
+}
+
+button {
+  width: 100px;
+  height: 100px;
+  font-family: "Google Sans", sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 4px;
+  color: #f6f7eb;
+  background-color: #e94f37;
+  font-size: 20px;
+}
