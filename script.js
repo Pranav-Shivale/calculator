@@ -1,8 +1,8 @@
-let number1;
-let operator;
-let number2;
-let tempNum = "";
+let number1 = "";
+let operator = "";
+let number2 = "";
 let result;
+let justCalculated = false;
 
 let numButtons = document.querySelectorAll(".num-btn");
 let opButtons = document.querySelectorAll(".op-btn");
@@ -11,11 +11,11 @@ let clearButton = document.querySelector(".clear-btn");
 let display = document.querySelector(".display");
 
 function add(a, b) {
-  return a+b;
+  return +(a+b).toFixed(10);
 }
 
 function subtract(a, b) {
-  return a-b;
+  return +(a-b).toFixed(10);
 }
 
 function multiply(a, b) {
@@ -45,35 +45,58 @@ function operate(a, b, op) {
 
 numButtons.forEach(button => {
   button.addEventListener("click", () => {
-    tempNum += button.textContent;
-    display.textContent = tempNum;
-    console.log("Number clicked. tempNum: " ,tempNum);
+    if(justCalculated) {
+      number1 = "";
+      number2 = "";
+      result = "";
+      operator = "";  
+      justCalculated = false;
+    }
+
+    if(operator) {
+      number2 += button.textContent;
+      display.textContent = number2;
+      console.log("Second Number: ", number2 ,typeof number2);
+    } else {
+      number1 += button.textContent;
+      display.textContent = number1
+      console.log("First Number: ", number1 ,typeof number1);
+    } 
   });
 });
 
 opButtons.forEach(button => {
   button.addEventListener("click", () => {
+    justCalculated = false;
+    if(operator && number2) {
+      number1 = operate(+number1, +number2, operator);
+      console.log("Second Operator: ",operator ,"First Number: " ,number1);
+      number2 = "";
+      operator = "";
+    }  
     operator = button.textContent;
-    if(result) number1 = result;
-    else number1 = +tempNum;
-    tempNum = "";
-    console.log("OP button number1: ",number1);
+    console.log("First Operator: ",operator);
   });
 });
 
 equalButton.addEventListener("click", () => {
-  number2 = +tempNum;
-  result = operate(number1, number2, operator);
-  display.textContent = result; 
-  tempNum = "";
-  console.log("Equal button. number2: ",number2, "result: ",result);
+  if(number2 && operator) {
+    result = operate(+number1, +number2, operator);
+    display.textContent = result;
+    console.log("Equal Button. Result: ",result);
+    number1 = result;
+    number2 = "";
+    operator = "";
+    justCalculated = true;
+  }
 });
 
 clearButton.addEventListener("click", () => {
-  tempNum = "";
-  number1 = 0;
-  number2 = 0;
-  result = 0;
-  display.textContent = 0;
+  display.textContent = "0";
+  number1 = "";
+  number2 = "";
+  result = "";
+  operator = "";
+  justCalculated = false;
   console.clear();
 });
