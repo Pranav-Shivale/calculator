@@ -54,13 +54,18 @@ numButtons.forEach(button => {
     }
 
     if(operator) {
-      number2 += button.textContent;
-      display.textContent = number2;
-      console.log("Second Number: ", number2 ,typeof number2);
-    } else {
-      number1 += button.textContent;
-      display.textContent = number1
-      console.log("First Number: ", number1 ,typeof number1);
+      if(!(number2.includes(".") && button.textContent === ".")) {
+        number2 += button.textContent;
+        display.textContent = number2;
+        console.log("Second Number: ", number2 ,typeof number2);
+      }
+    } 
+    else {
+      if(!(number1.includes(".") && button.textContent === ".")) {
+        number1 += button.textContent;
+        display.textContent = number1
+        console.log("First Number: ", number1 ,typeof number1);
+      }
     } 
   });
 });
