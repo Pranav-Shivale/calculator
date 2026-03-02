@@ -8,6 +8,7 @@ body {
   font-family: "Google Sans", sans-serif;
   font-weight: bold;
   font-size: 20px;
+  box-sizing: border-box;
 }
 
 .container {
@@ -17,13 +18,12 @@ body {
   gap: 4px;
   padding: 4px;
   border-radius: 4px;
-  background-color: #f6f7eb;
   width: 400px;
   height: auto;
 }
 
 .display {
-  border-bottom: 2px solid #e94f37;
+  border-bottom: 2px solid #c1121f;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -34,7 +34,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 4px
+  gap: 4px;
 }
 
 button {
@@ -46,6 +46,27 @@ button {
   border: 1px solid black;
   border-radius: 4px;
   color: #f6f7eb;
-  background-color: #e94f37;
   font-size: 20px;
+}
+
+.num-btn,
+.decimal-btn {
+  background-color: #c1121f;
+}
+
+.clear-btn,
+.equal-btn,
+.backspace-btn {
+  width: 100%;
+  background-color: #fdf0d5;
+  color: #c1121f;
+  font-size: 22px;
+}
+
+.op-btn {
+  background-color: #003049;
+}
+
+.zero-btn {
+  width: 200px;
 }
