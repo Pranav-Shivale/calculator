@@ -9,6 +9,7 @@ let opButtons = document.querySelectorAll(".op-btn");
 let equalButton = document.querySelector(".equal-btn");
 let clearButton = document.querySelector(".clear-btn");
 let display = document.querySelector(".display");
+let backspaceButton = document.querySelector(".backspace-btn");
 
 function add(a, b) {
   return +(a+b).toFixed(10);
@@ -104,4 +105,16 @@ clearButton.addEventListener("click", () => {
   operator = "";
   justCalculated = false;
   console.clear();
+});
+
+backspaceButton.addEventListener("click", () => {
+  if(display.textContent === number1) {
+    number1 = number1.slice(0, -1);
+    display.textContent = number1;
+  } else if(display.textContent === number2) {
+    number2 = number2.slice(0, -1);
+    display.textContent = number2;
+  } else {
+    display.textContent = "0";
+  }
 });
