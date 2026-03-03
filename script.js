@@ -118,3 +118,78 @@ backspaceButton.addEventListener("click", () => {
     display.textContent = "0";
   }
 });
+
+document.addEventListener("keydown", (event) => {
+  const key = event.key;
+
+  if((key >= "0" && key <= "9") || key === ".") {
+    if(justCalculated) {
+      number1 = "";
+      number2 = "";
+      result = "";
+      operator = "";  
+      justCalculated = false;
+    }
+
+    if(operator) {
+      if(!(number2.includes(".") && key === ".")) {
+        number2 += key;
+        display.textContent = number2;
+        console.log("Second Number: ", number2 ,typeof number2);
+      }
+    } 
+    else {
+      if(!(number1.includes(".") && key === ".")) {
+        number1 += key;
+        display.textContent = number1
+        console.log("First Number: ", number1 ,typeof number1);
+      }
+    }
+  }
+
+  else if(key === "+" || key === "-" || key === "*" || key === "/") {
+    justCalculated = false;
+    if(operator && number2) {
+      number1 = operate(+number1, +number2, operator);
+      console.log("Second Operator: ",operator ,"First Number: " ,number1);
+      number2 = "";
+      operator = "";
+    }  
+    operator = key;
+    console.log("First Operator: ",operator);
+  }
+
+  else if(key === "Enter") {
+    if(number2 && operator) {
+      result = operate(+number1, +number2, operator);
+      display.textContent = result;
+      console.log("Equal Button. Result: ",result);
+      number1 = result;
+      number2 = "";
+      operator = "";
+      justCalculated = true;
+    }
+  }
+
+  else if(key === "Escape") {
+    display.textContent = "0";
+    number1 = "";
+    number2 = "";
+    result = "";
+    operator = "";
+    justCalculated = false;
+    console.clear();
+  }
+
+  else if(key === "Backspace") {
+    if(display.textContent === number1) {
+      number1 = number1.slice(0, -1);
+      display.textContent = number1;
+    } else if(display.textContent === number2) {
+      number2 = number2.slice(0, -1);
+      display.textContent = number2;
+    } else {
+      display.textContent = "0";
+    }
+  }
+});
