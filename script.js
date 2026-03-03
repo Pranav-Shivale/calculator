@@ -44,48 +44,61 @@ function operate(a, b, op) {
   }
 } 
 
-numButtons.forEach(button => {
-  button.addEventListener("click", () => {
-    if(justCalculated) {
-      number1 = "";
-      number2 = "";
-      result = "";
-      operator = "";  
-      justCalculated = false;
-    }
-
-    if(operator) {
-      if(!(number2.includes(".") && button.textContent === ".")) {
-        number2 += button.textContent;
-        display.textContent = number2;
-        console.log("Second Number: ", number2 ,typeof number2);
-      }
-    } 
-    else {
-      if(!(number1.includes(".") && button.textContent === ".")) {
-        number1 += button.textContent;
-        display.textContent = number1
-        console.log("First Number: ", number1 ,typeof number1);
-      }
-    } 
-  });
-});
-
-opButtons.forEach(button => {
-  button.addEventListener("click", () => {
+function resetAfterCalculated() {
+  if(justCalculated) {
+    number1 = "";
+    number2 = "";
+    result = "";
+    operator = "";  
     justCalculated = false;
-    if(operator && number2) {
-      number1 = operate(+number1, +number2, operator);
-      console.log("Second Operator: ",operator ,"First Number: " ,number1);
-      number2 = "";
-      operator = "";
-    }  
-    operator = button.textContent;
-    console.log("First Operator: ",operator);
-  });
-});
+  }
+}
 
-equalButton.addEventListener("click", () => {
+function numClickFn(buttonContent) {
+  if(operator) {
+    if(!(number2.includes(".") && buttonContent === ".")) {
+      number2 += buttonContent;
+      display.textContent = number2;
+      console.log("Second Number: ", number2 ,typeof number2);
+    }
+  } 
+  else {
+    if(!(number1.includes(".") && buttonContent === ".")) {
+      number1 += buttonContent;
+      display.textContent = number1
+      console.log("First Number: ", number1 ,typeof number1);
+    }
+  } 
+}
+
+function numPressFn(key) {
+  if(operator) {
+    if(!(number2.includes(".") && key === ".")) {
+      number2 += key;
+      display.textContent = number2;
+      console.log("Second Number: ", number2 ,typeof number2);
+    }
+  } 
+  else {
+    if(!(number1.includes(".") && key === ".")) {
+      number1 += key;
+      display.textContent = number1
+      console.log("First Number: ", number1 ,typeof number1);
+    }
+  }
+}
+
+function opClickFn() {
+  justCalculated = false;
+  if(operator && number2) {
+    number1 = operate(+number1, +number2, operator);
+    console.log("Second Operator: ",operator ,"First Number: " ,number1);
+    number2 = "";
+    operator = "";
+  }  
+}
+
+function equalClickFn() {
   if(number2 && operator) {
     result = operate(+number1, +number2, operator);
     display.textContent = result;
@@ -95,9 +108,9 @@ equalButton.addEventListener("click", () => {
     operator = "";
     justCalculated = true;
   }
-});
+}
 
-clearButton.addEventListener("click", () => {
+function clearClickFn() {
   display.textContent = "0";
   number1 = "";
   number2 = "";
@@ -105,9 +118,9 @@ clearButton.addEventListener("click", () => {
   operator = "";
   justCalculated = false;
   console.clear();
-});
+}
 
-backspaceButton.addEventListener("click", () => {
+function backspaceClickFn() {
   if(display.textContent === number1) {
     number1 = number1.slice(0, -1);
     display.textContent = number1;
@@ -117,79 +130,48 @@ backspaceButton.addEventListener("click", () => {
   } else {
     display.textContent = "0";
   }
+}
+
+numButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    resetAfterCalculated();
+    numClickFn(button.textContent);
+  });
 });
+
+opButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    opClickFn();
+    operator = button.textContent;
+    console.log("First Operator: ",operator);
+  });
+});
+
+equalButton.addEventListener("click", () => equalClickFn());
+
+clearButton.addEventListener("click", () => clearClickFn());
+
+backspaceButton.addEventListener("click", () => backspaceClickFn());
 
 document.addEventListener("keydown", (event) => {
   const key = event.key;
 
   if((key >= "0" && key <= "9") || key === ".") {
-    if(justCalculated) {
-      number1 = "";
-      number2 = "";
-      result = "";
-      operator = "";  
-      justCalculated = false;
-    }
-
-    if(operator) {
-      if(!(number2.includes(".") && key === ".")) {
-        number2 += key;
-        display.textContent = number2;
-        console.log("Second Number: ", number2 ,typeof number2);
-      }
-    } 
-    else {
-      if(!(number1.includes(".") && key === ".")) {
-        number1 += key;
-        display.textContent = number1
-        console.log("First Number: ", number1 ,typeof number1);
-      }
-    }
+    resetAfterCalculated();
+    numPressFn(key);
   }
-
   else if(key === "+" || key === "-" || key === "*" || key === "/") {
-    justCalculated = false;
-    if(operator && number2) {
-      number1 = operate(+number1, +number2, operator);
-      console.log("Second Operator: ",operator ,"First Number: " ,number1);
-      number2 = "";
-      operator = "";
-    }  
+    opClickFn();
     operator = key;
     console.log("First Operator: ",operator);
   }
-
-  else if(key === "Enter") {
-    if(number2 && operator) {
-      result = operate(+number1, +number2, operator);
-      display.textContent = result;
-      console.log("Equal Button. Result: ",result);
-      number1 = result;
-      number2 = "";
-      operator = "";
-      justCalculated = true;
-    }
+  else if(key === "Enter" || key === "=") {
+    equalClickFn();
   }
-
   else if(key === "Escape") {
-    display.textContent = "0";
-    number1 = "";
-    number2 = "";
-    result = "";
-    operator = "";
-    justCalculated = false;
-    console.clear();
+    clearClickFn();
   }
-
   else if(key === "Backspace") {
-    if(display.textContent === number1) {
-      number1 = number1.slice(0, -1);
-      display.textContent = number1;
-    } else if(display.textContent === number2) {
-      number2 = number2.slice(0, -1);
-      display.textContent = number2;
-    } else {
-      display.textContent = "0";
-    }
+    backspaceClickFn();
   }
 });
